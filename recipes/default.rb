@@ -49,6 +49,14 @@ python_package 'matplotlib' do
   version '1.5.1'
 end
 
+python_package 'scipy' do
+  version '0.18.0'
+end
+
+python_package 'pandas' do
+  version '0.18.0' 
+end
+
 # check out the GraPhlAn sources
 mercurial node['graphlan']['install_dir'] do
   repository 'https://hg@bitbucket.org/nsegata/graphlan'
@@ -64,5 +72,5 @@ end
 #       NOT the Chef Supermarket version. Hence a custom Berksfile entry is required.
 magic_shell_environment 'PATH' do
   filename 'graphlan'
-  value "$PATH:#{node['graphlan']['install_dir']}"
+  value "$PATH:#{node['graphlan']['install_dir']}:#{node['export2graphlan']['install_dir']}"
 end

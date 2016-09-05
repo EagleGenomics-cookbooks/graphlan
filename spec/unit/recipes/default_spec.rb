@@ -53,6 +53,14 @@ describe 'graphlan::default' do
     expect(chef_run).to install_python_package('matplotlib')
   end
 
+  it 'install scipy' do
+    expect(chef_run).to install_python_package('scipy')
+  end
+
+  it 'install pandas' do
+    expect(chef_run).to install_python_package('pandas')
+  end
+
   it 'install python' do
     expect(chef_run).to install_python_runtime('2')
   end
