@@ -54,7 +54,7 @@ python_package 'scipy' do
 end
 
 python_package 'pandas' do
-  version '0.18.0' 
+  version '0.18.0'
 end
 
 # check out the GraPhlAn sources

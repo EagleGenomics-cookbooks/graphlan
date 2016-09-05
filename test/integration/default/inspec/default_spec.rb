@@ -26,12 +26,12 @@ end
 # NB no version number for export2graphlan
 describe command('which export2graphlan.py') do
   its('exit_status') { should eq 0 }
-end 
+end
 
 # Check that export2graphlan runs
 describe command('export2graphlan.py -h') do
-  its('exit_status') {should eq 0}
-end 
+  its('exit_status') { should eq 0 }
+end
 
 # Check python is installed
 describe command('which python') do
