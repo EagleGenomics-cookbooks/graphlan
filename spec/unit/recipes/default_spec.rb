@@ -29,22 +29,6 @@ describe 'graphlan::default' do
     expect(chef_run).to add_magic_shell_environment('GRAPHLAN_VERSION')
   end
 
-  it 'install png libs' do
-    expect(chef_run).to install_package('Install png libs')
-  end
-
-  it 'install Install freetype libs' do
-    expect(chef_run).to install_package('Install freetype libs')
-  end
-
-  it 'install pkg config' do
-    expect(chef_run).to install_package('Install pkg config')
-  end
-
-  it 'install g++' do
-    expect(chef_run).to install_package('Install g++')
-  end
-
   it 'install biopython' do
     expect(chef_run).to install_python_package('biopython')
   end

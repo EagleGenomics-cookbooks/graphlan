@@ -10,29 +10,8 @@ include_recipe 'poise-python'
 include_recipe 'mercurial'
 
 # install required packages for matplotlib
-package 'Install png libs' do
-  case node['platform']
-  when 'ubuntu', 'debian'
-    package_name 'libpng12-dev'
-  end
-end
-package 'Install freetype libs' do
-  case node['platform']
-  when 'ubuntu', 'debian'
-    package_name 'libfreetype6-dev'
-  end
-end
-package 'Install pkg config' do
-  case node['platform']
-  when 'ubuntu', 'debian'
-    package_name 'pkg-config'
-  end
-end
-package 'Install g++' do
-  case node['platform']
-  when 'ubuntu', 'debian'
-    package_name 'g++'
-  end
+if node['platform_family'] == 'debian'
+  package %w(libpng12-dev libfreetype6-dev pkg-config g++)
 end
 
 # install the Python runtime
