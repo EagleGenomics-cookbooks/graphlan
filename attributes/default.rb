@@ -1,4 +1,9 @@
-
+default['python']['version'] = '2.7.17'
+default['graphlan']['src_repo'] = 'https://github.com/biobakery/graphlan.git'
+default['export2graphlan']['src_repo'] = 'https://github.com/SegataLab/export2graphlan.git'
+default['hclust2']['src_repo'] = 'https://github.com/SegataLab/hclust2.git'
 default['graphlan']['install_dir'] = '/usr/local/graphlan'
+default['export2graphlan']['install_dir'] = '/usr/local/graphlan/export2graphlan'
+default['hclust2']['install_dir'] = '/usr/local/graphlan/export2graphlan/hclust2'
 default['graphlan']['version'] = '1.1'
 default['export2graphlan']['install_dir'] = '/usr/local/graphlan/export2graphlan'

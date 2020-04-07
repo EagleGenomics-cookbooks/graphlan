@@ -1,59 +1,22 @@
 #
-# Cookbook Name:: graphlan
+# Cookbook:: graphlan
 # Spec:: default
 #
-# Copyright (c) 2016 The Authors, All Rights Reserved.
+# Copyright:: 2019, The Authors, All Rights Reserved.
 
 require 'spec_helper'
 
 describe 'graphlan::default' do
-  let(:chef_run) { ChefSpec::SoloRunner.new.converge(described_recipe) }
+  context 'When all attributes are default, on Ubuntu 18.04' do
+    let(:chef_run) do
+      # for a complete list of available platforms and versions see:
+      # https://github.com/customink/fauxhai/blob/master/PLATFORMS.md
+      runner = ChefSpec::ServerRunner.new(platform: 'ubuntu', version: '18.04')
+      runner.converge(described_recipe)
+    end
 
-  it 'converges successfully' do
-    expect { chef_run }.to_not raise_error
+    it 'converges successfully' do
+      expect { chef_run }.to_not raise_error
+    end
   end
-
-  it 'includes the `poise-python` recipe' do
-    expect(chef_run).to include_recipe('poise-python')
-  end
-
-  it 'includes the `mercurial` recipe' do
-    expect(chef_run).to include_recipe('mercurial')
-  end
-
-  it 'adds graphlan path to PATH' do
-    expect(chef_run).to add_magic_shell_environment('PATH')
-  end
-
-  it 'sets GRAPHLAN_VERSION variable' do
-    expect(chef_run).to add_magic_shell_environment('GRAPHLAN_VERSION')
-  end
-
-  it 'install biopython' do
-    expect(chef_run).to install_python_package('biopython')
-  end
-
-  it 'install matplotlib' do
-    expect(chef_run).to install_python_package('matplotlib')
-  end
-
-  it 'install scipy' do
-    expect(chef_run).to install_python_package('scipy')
-  end
-
-  it 'install pandas' do
-    expect(chef_run).to install_python_package('pandas')
-  end
-
-  it 'install python' do
-    expect(chef_run).to install_python_runtime('2')
-  end
-
-  it 'install mercurial' do
-    expect(chef_run).to upgrade_package('mercurial')
-  end
-
-  # it 'clones the graphlan mercurial repo' do
-  #   expect(chef_run).to clone_mercurial(chef_run.node['graphlan']['install_dir'])
-  # end
 end

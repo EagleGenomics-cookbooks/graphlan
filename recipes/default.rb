@@ -1,46 +1,62 @@
 #
-# Cookbook Name:: graphlan
+# Cookbook:: graphlan
 # Recipe:: default
 #
 # Copyright (c) 2016 Eagle Genomics Ltd, Apache License, Version 2.0.
 ##########################################################
 
-include_recipe 'apt' if node['platform_family'] == 'debian'
-include_recipe 'poise-python'
-include_recipe 'mercurial'
+include_recipe 'python_setup'
 
+# requirement for export2graphlan
 # install required packages for matplotlib
-if node['platform_family'] == 'debian'
-  package %w(libpng12-dev libfreetype6-dev pkg-config g++)
+package 'Install libraries' do
+  case node['platform']
+  when 'ubuntu', 'debian'
+    package_name %w(libpng-dev libfreetype6-dev pkg-config g++)
+  end
 end
 
-# install the Python runtime
-python_runtime '2' do
-  version '2.7'
-  pip_version '8.1.2'
+pyenv_pip 'numpy' do
+  version '1.11.1'
 end
 
-python_package 'biopython' do
+pyenv_pip 'biopython' do
   version '1.67'
 end
 
-python_package 'matplotlib' do
+pyenv_pip 'matplotlib' do
   version '1.5.1'
 end
 
-python_package 'scipy' do
+pyenv_pip 'scipy' do
   version '0.18.0'
 end
 
-python_package 'pandas' do
+pyenv_pip 'pandas' do
   version '0.18.0'
 end
 
-# check out the GraPhlAn sources
-mercurial node['graphlan']['install_dir'] do
-  repository 'https://hg@bitbucket.org/nsegata/graphlan'
-  reference node['graphlan']['version']
-  action :clone
+git 'checkout graphlan src code' do
+  destination node['graphlan']['install_dir']
+  repository node['graphlan']['src_repo']
+  revision node['graphlan']['version']
+  action :export
+end
+
+# graphlan uses a git submodule, but this module does not export when using tagged versions,
+# so we check it out as a subdirectory
+git 'checkout export2graphlan src code' do
+  destination node['export2graphlan']['install_dir']
+  repository node['export2graphlan']['src_repo']
+  action :export
+end
+
+# export2graphlan uses a git submodule, but because of complications exporting submodule,
+# so we export it directly into a subdirectory
+git 'checkout hclust2 src code' do
+  destination node['hclust2']['install_dir']
+  repository node['hclust2']['src_repo']
+  action :export
 end
 
 magic_shell_environment 'GRAPHLAN_VERSION' do
